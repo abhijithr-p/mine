@@ -1118,18 +1118,113 @@
     }
 
     @media (max-width: 480px) {
+      #gate {
+        padding: 1rem 0.75rem;
+      }
+
       .gate-card {
-        padding: 1.8rem 1.2rem;
-        border-radius: 22px;
+        width: min(94vw, 380px);
+        padding: 1.5rem 1.1rem;
+        border-radius: 24px;
+        max-height: 94dvh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .gate-badge {
+        font-size: 0.62rem;
+        letter-spacing: 0.16em;
+        padding: 0.28rem 0.8rem;
+        margin-bottom: 0.85rem;
+      }
+
+      .gate-avatar-wrap {
+        width: 68px;
+        height: 68px;
+        margin-bottom: 0.75rem;
+      }
+
+      .gate-emoji {
+        font-size: 2.2rem;
+      }
+
+      .floating-balloon {
+        font-size: 1.1rem;
+      }
+
+      .balloon-left {
+        left: -12px;
+        top: 4px;
+      }
+
+      .balloon-right {
+        right: -12px;
+        bottom: 4px;
+      }
+
+      .gate-q {
+        font-size: clamp(1.4rem, 5.8vw, 1.8rem);
+        margin-bottom: 0.35rem;
+      }
+
+      .gate-sub {
+        font-size: 0.82rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .gate-status-pill {
+        font-size: 0.7rem;
+        padding: 0.28rem 0.75rem;
+        margin-bottom: 0.85rem;
       }
 
       .gate-zone {
-        height: min(42vh, 240px);
+        height: 180px;
+        margin-top: 0.2rem;
       }
 
       .gate-yes {
-        padding: 0.85rem 2rem;
+        padding: 0.8rem 2rem;
         font-size: 0.95rem;
+      }
+
+      .gate-no {
+        padding: 0.75rem 1.6rem;
+        font-size: 0.88rem;
+      }
+    }
+
+    @media (max-height: 580px) {
+      .gate-card {
+        padding: 1rem 1rem;
+        max-height: 96dvh;
+        overflow-y: auto;
+      }
+
+      .gate-badge {
+        margin-bottom: 0.5rem;
+      }
+
+      .gate-avatar-wrap {
+        width: 54px;
+        height: 54px;
+        margin-bottom: 0.5rem;
+      }
+
+      .gate-emoji {
+        font-size: 1.8rem;
+      }
+
+      .gate-sub {
+        margin-bottom: 0.4rem;
+      }
+
+      .gate-status-pill {
+        margin-bottom: 0.5rem;
+      }
+
+      .gate-zone {
+        height: 150px;
       }
     }
 
@@ -1380,9 +1475,13 @@
 
     function randomDodge() {
       const zw = gateZone.clientWidth, zh = gateZone.clientHeight;
-      const padX = 65, padTop = 85, padBottom = 35;
-      const x = padX + Math.random() * Math.max(1, zw - padX * 2);
-      const y = padTop + Math.random() * Math.max(1, zh - padTop - padBottom);
+      const padX = Math.min(55, zw * 0.18);
+      const padTop = Math.min(65, zh * 0.3);
+      const padBottom = 25;
+      const maxX = Math.max(10, zw - padX * 2);
+      const maxY = Math.max(10, zh - padTop - padBottom);
+      const x = padX + Math.random() * maxX;
+      const y = padTop + Math.random() * maxY;
       noBtn.style.left = x + 'px';
       noBtn.style.top = y + 'px';
       dodgeCount++;
