@@ -742,7 +742,7 @@
     /* ---------- horizontal scroll-linked gallery ---------- */
     .gallery-wrap {
       position: relative;
-      height: 250vh;
+      height: 320vh;
       max-width: none;
       padding: 0;
     }
@@ -1384,7 +1384,7 @@
           </div>
           <div class="tag">Memory 01</div>
           <h3>The smile that makes you beautiful</h3>
-         
+
         </div>
       </div>
 
@@ -1396,7 +1396,7 @@
           </div>
           <div class="tag">Memory 02</div>
           <h3>That one silly moment</h3>
-        
+
         </div>
       </div>
 
@@ -1409,7 +1409,7 @@
           </div>
           <div class="tag">Memory 03</div>
           <h3>The madness that made you special</h3>
-        
+
         </div>
       </div>
 
@@ -1431,7 +1431,8 @@
     <div class="sparkle-burst" id="sparkleBurst"></div>
     <div class="heart">💫</div>
     <h2>Here's to you, Chukku</h2>
-    <p>May this year be as warm and wonderful as you make every day feel for the people around you. Happy Birthday — I
+    <p>May this year be as warm and wonderful as you make every day feel for the people around you. Happy Birthday
+      Chukku, I
       love you.</p>
   </section>
 
@@ -1561,12 +1562,19 @@
       if (scrollable <= 0) return 0;
 
       // STRICT PINNED BOUNDS:
-      // Horizontal scroll happens ONLY while section is actively pinned (rect.top <= 0)
       if (rect.top > 0) return 0;
       if (rect.top < -scrollable) return maxShift;
 
-      let progress = (-rect.top) / scrollable;
-      return progress * maxShift;
+      let rawProgress = (-rect.top) / scrollable;
+
+      // Guarantees all horizontal images pan 100% completely before section unpins:
+      // Holds Image 1 for initial 4% of scroll
+      // Pans 0 -> 100% across 4% to 88% of scroll
+      // Holds last image (17.jpeg) for final 12% of scroll before moving up
+      let p = (rawProgress - 0.04) / 0.84;
+      let clampedP = Math.max(0, Math.min(1, p));
+
+      return clampedP * maxShift;
     }
 
     function renderGallery() {
