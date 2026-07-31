@@ -742,7 +742,7 @@
     /* ---------- horizontal scroll-linked gallery ---------- */
     .gallery-wrap {
       position: relative;
-      height: 230vh;
+      height: 250vh;
       max-width: none;
       padding: 0;
     }
@@ -751,10 +751,11 @@
       position: sticky;
       top: 0;
       height: 100svh;
+      height: 100dvh;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 1.6rem;
+      gap: 1.8rem;
       overflow: hidden;
     }
 
@@ -773,57 +774,59 @@
     .gallery-heading h2 {
       font-family: 'Cormorant Garamond', serif;
       font-weight: 600;
-      font-size: clamp(1.7rem, 5.5vw, 2.3rem);
+      font-size: clamp(1.8rem, 5.5vw, 2.5rem);
     }
 
     .gallery-track {
       display: flex;
-      gap: 1.1rem;
-      padding: 0 6vw;
+      gap: 1.4rem;
+      padding-left: calc(50vw - 125px);
+      padding-right: calc(50vw - 125px);
       will-change: transform;
+      transform: translate3d(0, 0, 0);
     }
 
     .gallery-item {
       flex: 0 0 auto;
-      height: min(52vh, 320px);
+      height: min(50vh, 340px);
       width: auto;
       aspect-ratio: 4/5;
       max-width: 85vw;
-      border-radius: 16px;
+      border-radius: 20px;
       background: var(--glass);
-      border: 1px dashed rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 0;
-      color: rgba(246, 238, 251, 0.45);
-      font-size: .8rem;
-      box-shadow: 0 20px 50px -25px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 25px 60px -20px rgba(0, 0, 0, 0.7);
       overflow: hidden;
-      transform: scale(.92);
-      transition: transform .4s ease, border-color .4s ease, aspect-ratio .4s ease;
+      will-change: transform, opacity;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
     }
 
     .gallery-item.in-focus {
-      transform: scale(1);
-      border-color: rgba(240, 201, 135, 0.35);
+      border-color: rgba(240, 201, 135, 0.55);
+      box-shadow: 0 30px 70px -15px rgba(240, 201, 135, 0.25);
     }
 
     .gallery-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 16px;
+      border-radius: 20px;
+      pointer-events: none;
     }
 
     .gallery-hint {
       text-align: center;
-      font-size: .68rem;
-      letter-spacing: .2em;
+      font-size: .7rem;
+      letter-spacing: .22em;
       text-transform: uppercase;
-      color: var(--lavender);
-      opacity: .6;
+      color: var(--gold);
+      opacity: .75;
+      animation: bob 2s ease-in-out infinite;
     }
 
     /* ---------- birthday gate ---------- */
@@ -910,7 +913,9 @@
     .gate-card {
       position: relative;
       z-index: 2;
-      width: min(92vw, 420px);
+      width: min(90vw, 400px);
+      max-width: calc(100vw - 2rem);
+      margin: 0 auto;
       background: rgba(42, 26, 56, 0.65);
       border: 1px solid rgba(240, 201, 135, 0.28);
       border-radius: 28px;
@@ -920,6 +925,7 @@
       box-shadow: 0 30px 90px -20px rgba(0, 0, 0, 0.75), 0 0 40px 2px rgba(232, 169, 184, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.2);
       text-align: center;
       animation: gateCardPop 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+      box-sizing: border-box;
     }
 
     @keyframes gateCardPop {
@@ -937,17 +943,19 @@
     .gate-badge {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.4rem;
-      padding: 0.35rem 1rem;
+      padding: 0.35rem 0.8rem;
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(201, 168, 233, 0.3);
-      font-size: 0.68rem;
-      letter-spacing: 0.22em;
+      font-size: clamp(0.58rem, 2.5vw, 0.68rem);
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 1.3rem;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      max-width: 100%;
     }
 
     .badge-sparkle {
@@ -1044,14 +1052,15 @@
       align-items: center;
       justify-content: center;
       gap: 0.45rem;
-      padding: 0.35rem 0.9rem;
+      padding: 0.35rem 0.8rem;
       border-radius: 999px;
       background: rgba(232, 169, 184, 0.12);
       border: 1px solid rgba(232, 169, 184, 0.25);
-      font-size: 0.75rem;
+      font-size: clamp(0.66rem, 2.8vw, 0.75rem);
       color: var(--rose);
       margin-bottom: 1.3rem;
       transition: all 0.3s ease;
+      max-width: 100%;
     }
 
     .status-dot {
@@ -1119,78 +1128,79 @@
 
     @media (max-width: 480px) {
       #gate {
-        padding: 1rem 0.75rem;
+        padding: 0.75rem;
       }
 
       .gate-card {
-        width: min(94vw, 380px);
-        padding: 1.5rem 1.1rem;
-        border-radius: 24px;
+        width: 100%;
+        max-width: calc(100vw - 1.5rem);
+        padding: 1.4rem 0.9rem;
+        border-radius: 22px;
         max-height: 94dvh;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
       }
 
       .gate-badge {
-        font-size: 0.62rem;
-        letter-spacing: 0.16em;
-        padding: 0.28rem 0.8rem;
-        margin-bottom: 0.85rem;
-      }
-
-      .gate-avatar-wrap {
-        width: 68px;
-        height: 68px;
-        margin-bottom: 0.75rem;
-      }
-
-      .gate-emoji {
-        font-size: 2.2rem;
-      }
-
-      .floating-balloon {
-        font-size: 1.1rem;
-      }
-
-      .balloon-left {
-        left: -12px;
-        top: 4px;
-      }
-
-      .balloon-right {
-        right: -12px;
-        bottom: 4px;
-      }
-
-      .gate-q {
-        font-size: clamp(1.4rem, 5.8vw, 1.8rem);
-        margin-bottom: 0.35rem;
-      }
-
-      .gate-sub {
-        font-size: 0.82rem;
+        font-size: 0.58rem;
+        letter-spacing: 0.08em;
+        padding: 0.25rem 0.65rem;
         margin-bottom: 0.8rem;
       }
 
+      .gate-avatar-wrap {
+        width: 64px;
+        height: 64px;
+        margin-bottom: 0.7rem;
+      }
+
+      .gate-emoji {
+        font-size: 2rem;
+      }
+
+      .floating-balloon {
+        font-size: 1rem;
+      }
+
+      .balloon-left {
+        left: -10px;
+        top: 2px;
+      }
+
+      .balloon-right {
+        right: -10px;
+        bottom: 2px;
+      }
+
+      .gate-q {
+        font-size: clamp(1.35rem, 5.5vw, 1.7rem);
+        margin-bottom: 0.3rem;
+      }
+
+      .gate-sub {
+        font-size: 0.8rem;
+        margin-bottom: 0.75rem;
+      }
+
       .gate-status-pill {
-        font-size: 0.7rem;
-        padding: 0.28rem 0.75rem;
-        margin-bottom: 0.85rem;
+        font-size: 0.66rem;
+        padding: 0.25rem 0.65rem;
+        margin-bottom: 0.8rem;
       }
 
       .gate-zone {
-        height: 180px;
+        height: 170px;
         margin-top: 0.2rem;
       }
 
       .gate-yes {
-        padding: 0.8rem 2rem;
-        font-size: 0.95rem;
+        padding: 0.75rem 1.8rem;
+        font-size: 0.92rem;
       }
 
       .gate-no {
-        padding: 0.75rem 1.6rem;
-        font-size: 0.88rem;
+        padding: 0.7rem 1.4rem;
+        font-size: 0.85rem;
       }
     }
 
@@ -1296,25 +1306,34 @@
   </section>
 
   <!-- ============ VIDEO WISH ============ -->
-  <section class="video-section reveal-scale">
-    <span class="eyebrow">before anything else</span>
-    <h2>A little something from me</h2>
-    <div class="video-frame">
-      <!-- 🎥 Replace this whole block with:
-         <video src="your-video.mp4" controls playsinline poster="thumbnail.jpg"></video> -->
-      <div class="play-hint">▶</div>
-      <p class="video-caption">Add your birthday video wish here</p>
-    </div>
-  </section>
+
 
   <!-- ============ MESSAGE ============ -->
   <section class="message reveal">
     <h2>Dear Chukku,</h2>
     <p>
-      Some people light up a room without even trying — you've always been one of them.
-      Another year has passed, and somehow you've only gotten kinder, brighter, and even more
-      impossible not to smile around. I hope this year brings you everything you quietly
-      wish for, and a few things you didn't even know to ask for.
+
+      Happy Birthday to the most beautiful soul I've ever known.
+
+      You make my world brighter in ways you'll probably never realize. Every smile of yours feels like home, every
+      laugh becomes one of my favorite memories, and every moment with you is something I hold close to my heart. Loving
+      you has been the easiest and most beautiful part of my life.
+
+      On your special day, I don't just wish you happiness,I wish you a life filled with endless laughter, peaceful
+      moments, dreams that come true, and people who love you as deeply as you deserve. I hope every sunrise brings you
+      hope, every challenge makes you stronger, and every day reminds you how incredibly special you are.
+
+      Thank you for being you for your kindness, your warmth, your patience, and the way you make ordinary days feel
+      extraordinary. You are my comfort, my happiness, and one of the greatest blessings in my life.
+
+      No matter where life takes us, I hope you always remember that you'll always have a place in my heart. Today is
+      all about celebrating the amazing person you are, and I couldn't be more grateful that I get to celebrate you.
+
+      Happy Birthday, my Chukku. May this year be filled with love, adventures, success, and countless reasons to smile.
+      You deserve every beautiful thing this world has to offer.
+
+      With all my love, today and always. ❤️
+
     </p>
     <p class="signoff">— with all my love</p>
   </section>
@@ -1364,8 +1383,8 @@
             <img src="1.jpg" alt="Chukku memory" style="object-position:center top;">
           </div>
           <div class="tag">Memory 01</div>
-          <h3>The day we met</h3>
-          <p>Replace this with your own memory — where it was, what she said, how it felt.</p>
+          <h3>The smile that makes you beautiful</h3>
+         
         </div>
       </div>
 
@@ -1377,7 +1396,7 @@
           </div>
           <div class="tag">Memory 02</div>
           <h3>That one silly moment</h3>
-          <p>A memory that still makes you laugh when you think about it.</p>
+        
         </div>
       </div>
 
@@ -1389,8 +1408,8 @@
               style="object-position:center top;">
           </div>
           <div class="tag">Memory 03</div>
-          <h3>A trip / a day out</h3>
-          <p>Somewhere the two of you went, and why it stuck with you.</p>
+          <h3>The madness that made you special</h3>
+        
         </div>
       </div>
 
@@ -1401,8 +1420,7 @@
             <img src="83442.jpg" alt="Chukku's laugh">
           </div>
           <div class="tag">Memory 04</div>
-          <h3>Chukku's laugh</h3>
-          <p>Something small and specific — the little things you love most about her.</p>
+          <h3>The way you light up things</h3>
         </div>
       </div>
     </div>
@@ -1523,24 +1541,93 @@
     const galleryWrap = document.querySelector('.gallery-wrap');
     const galleryTrack = document.getElementById('galleryTrack');
     const galleryItems = document.querySelectorAll('.gallery-item');
+    let currentShift = 0;
+    let targetShift = 0;
     let maxShift = 0;
+    let galleryAnimFrame = null;
+
     function measureGallery() {
-      maxShift = Math.max(0, galleryTrack.scrollWidth - window.innerWidth + 48);
+      if (!galleryTrack || !galleryItems.length) return;
+      const lastItem = galleryItems[galleryItems.length - 1];
+      // Exact shift distance so the last image (17.jpeg) lands dead-center on screen
+      const lastItemCenter = lastItem.offsetLeft + lastItem.offsetWidth / 2;
+      maxShift = Math.max(0, lastItemCenter - window.innerWidth / 2);
     }
-    function updateGallery() {
-      if (!galleryWrap) return;
+
+    function calculateTargetShift() {
+      if (!galleryWrap) return 0;
       const rect = galleryWrap.getBoundingClientRect();
       const scrollable = rect.height - window.innerHeight;
-      let progress = scrollable > 0 ? (-rect.top) / scrollable : 0;
-      progress = Math.max(0, Math.min(1, progress));
-      galleryTrack.style.transform = `translateX(${-progress * maxShift}px)`;
+      if (scrollable <= 0) return 0;
+
+      // STRICT PINNED BOUNDS:
+      // Horizontal scroll happens ONLY while section is actively pinned (rect.top <= 0)
+      if (rect.top > 0) return 0;
+      if (rect.top < -scrollable) return maxShift;
+
+      let progress = (-rect.top) / scrollable;
+      return progress * maxShift;
+    }
+
+    function renderGallery() {
+      if (!galleryWrap || !galleryTrack) return;
+
+      const rect = galleryWrap.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      // Fast exit if gallery is completely offscreen (above or below viewport)
+      if (rect.bottom < -50) {
+        targetShift = maxShift;
+        currentShift = maxShift;
+        galleryTrack.style.transform = `translate3d(${-maxShift}px, 0, 0)`;
+        galleryAnimFrame = null;
+        return;
+      }
+      if (rect.top > vh + 50) {
+        targetShift = 0;
+        currentShift = 0;
+        galleryTrack.style.transform = `translate3d(0, 0, 0)`;
+        galleryAnimFrame = null;
+        return;
+      }
+
+      targetShift = calculateTargetShift();
+
+      // Silky LERP momentum physics
+      currentShift += (targetShift - currentShift) * 0.14;
+      if (Math.abs(targetShift - currentShift) < 0.05) {
+        currentShift = targetShift;
+      }
+
+      galleryTrack.style.transform = `translate3d(${-currentShift}px, 0, 0)`;
 
       const centerX = window.innerWidth / 2;
       galleryItems.forEach(item => {
         const ir = item.getBoundingClientRect();
         const itemCenter = ir.left + ir.width / 2;
-        item.classList.toggle('in-focus', Math.abs(itemCenter - centerX) < ir.width * 0.6);
+        const distFromCenter = Math.abs(centerX - itemCenter);
+        const maxDist = window.innerWidth * 0.45;
+
+        const normDist = Math.min(1, distFromCenter / maxDist);
+        const scale = 1.05 - normDist * 0.16;
+        const opacity = 1 - normDist * 0.35;
+
+        item.style.transform = `scale(${scale})`;
+        item.style.opacity = opacity;
+        item.classList.toggle('in-focus', normDist < 0.28);
       });
+
+      if (Math.abs(targetShift - currentShift) > 0.05) {
+        galleryAnimFrame = requestAnimationFrame(renderGallery);
+      } else {
+        galleryAnimFrame = null;
+      }
+    }
+
+    function onGalleryScroll() {
+      if (!galleryAnimFrame) {
+        galleryAnimFrame = requestAnimationFrame(renderGallery);
+      }
     }
 
     // ---------- scroll progress bar ----------
@@ -1582,15 +1669,16 @@
           updateProgress();
           updateParallax();
           updateTimelineFill();
-          updateGallery();
+          onGalleryScroll();
           ticking = false;
         });
         ticking = true;
       }
     }
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', () => { measureGallery(); onScroll(); });
+    window.addEventListener('resize', () => { measureGallery(); renderGallery(); onScroll(); });
     measureGallery();
+    renderGallery();
     onScroll();
 
     // ---------- scroll reveal (multiple variants) ----------
