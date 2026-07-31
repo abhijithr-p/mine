@@ -32,6 +32,8 @@
 
     html {
       scroll-behavior: smooth;
+      width:100%;
+      overflow-x:clip;
     }
 
     body {
@@ -39,7 +41,7 @@
       color: var(--mist);
       font-family: 'Jost', sans-serif;
       font-weight: 300;
-      overflow-x: hidden;
+      overflow-x: clip;
       position: relative;
     }
 
@@ -353,11 +355,11 @@
     /* bigger, punchier slide-in distance on phones so motion actually reads */
     @media(max-width:640px) {
       .reveal-left .memory-card {
-        transform: translateX(-70vw) rotate(-5deg) scale(.94);
+        transform: translateX(-40px) rotate(-3deg) scale(.96);
       }
 
       .reveal-right .memory-card {
-        transform: translateX(70vw) rotate(5deg) scale(.94);
+        transform: translateX(40px) rotate(3deg) scale(.96);
       }
 
       .reveal-left.visible .memory-card,
@@ -742,9 +744,15 @@
     /* ---------- horizontal scroll-linked gallery ---------- */
     .gallery-wrap {
       position: relative;
-      height: 320vh;
+      overflow-x: clip;
+      min-height: 100vh;
       max-width: none;
       padding: 0;
+    }
+
+    .timeline-section {
+      padding-top: 2rem;
+      overflow-x: clip;
     }
 
     .gallery-sticky {
@@ -1367,7 +1375,7 @@
   </section>
 
   <!-- ============ TIMELINE ============ -->
-  <section>
+  <section class="timeline-section">
     <div class="timeline-heading reveal">
       <span class="eyebrow">a little walk down memory lane</span>
       <h2>Moments with you</h2>
@@ -1553,6 +1561,11 @@
       // Exact shift distance so the last image (17.jpeg) lands dead-center on screen
       const lastItemCenter = lastItem.offsetLeft + lastItem.offsetWidth / 2;
       maxShift = Math.max(0, lastItemCenter - window.innerWidth / 2);
+
+      // Exact 1-to-1 height match: zero blank vertical space, unpins the instant last photo lands!
+      if (galleryWrap) {
+        galleryWrap.style.height = (window.innerHeight + maxShift) + 'px';
+      }
     }
 
     function calculateTargetShift() {
@@ -1565,16 +1578,8 @@
       if (rect.top > 0) return 0;
       if (rect.top < -scrollable) return maxShift;
 
-      let rawProgress = (-rect.top) / scrollable;
-
-      // Guarantees all horizontal images pan 100% completely before section unpins:
-      // Holds Image 1 for initial 4% of scroll
-      // Pans 0 -> 100% across 4% to 88% of scroll
-      // Holds last image (17.jpeg) for final 12% of scroll before moving up
-      let p = (rawProgress - 0.04) / 0.84;
-      let clampedP = Math.max(0, Math.min(1, p));
-
-      return clampedP * maxShift;
+      let progress = (-rect.top) / scrollable;
+      return Math.max(0, Math.min(1, progress)) * maxShift;
     }
 
     function renderGallery() {
